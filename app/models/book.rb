@@ -1,16 +1,16 @@
 class Book < ApplicationRecord
- has_one_attached :image  
+ has_one_attached :image
  belongs_to :user
  has_many :book_comments, dependent: :destroy
  has_many :favorites, dependent: :destroy
- 
+
   validates :title,presence:true
   validates :body,presence:true,length:{maximum:200}
-  
+
   def favorited_by?(user)
    favorites.exists?(user_id:user.id)
   end
-  
+
   def self.looks(search, word)
     if search == "perfect_match"
       @book = Book.where("title LIKE?","#{word}")
@@ -24,9 +24,16 @@ class Book < ApplicationRecord
       @book = Book.all
     end
   end
-  
+
   scope :created_today, -> { where(created_at: Time.zone.now.all_day) } # 今日
   scope :created_yesterday, -> { where(created_at: 1.day.ago.all_day) } # 前日
   scope :created_this_week, -> { where(created_at: Time.current.all_week) } #今週
   scope :created_last_week, -> { where(created_at: Time.current.last_week.all_week) } #先週
+
+  scope :created_days_ago, ->(n) { where(created_at: n.days.ago.all_day) } #ｎ日前
+
+  def self.book_week_count
+   (0..6).map { |n| created_days_ago(n).count }.reverse
+  end
+
 end

@@ -11,46 +11,12 @@
       <%= render 'books/form', book: @book %>
     </div>
     <div class='col-md-8 offset-md-1'>
-      <!--投稿数-->
-      <h2>Users Count</h2>
-      <table class="table">
-        <tr>
-        <thead>
-          <tr>
-            <th>本日の投稿</th>
-            <th>前日の投稿</th>
-            <th>差分</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><%= @today_book.count %></td>
-            <td><%= @yesterday_book.count %></td>
-            <td><%= @the_day_before = @today_book.count - @yesterday_book.count %></td>
-          </tr>
-        </tr>
-        </tbody>
-                <tr>
-        <thead>
-          <tr>
-            <th>今週の投稿</th>
-            <th>先週の投稿</th>
-            <th>週の差分</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><%= @week_book.count %></td>
-            <td><%= @last_week_book.count %></td>
-            <td><%= @the_week_before = @week_book.count - @last_week_book.count %></td>
-          </tr>
-        </tr>
-        </tbody>
-      </table>
-
       <!--投稿した一覧-->
       <h2>Books</h2>
       <%= render 'books/index',books: @books %>
+      <!--投稿数-->
+      <%= render "count",books: @books %>
+      <%= render "week_count",books: @books %>
     </div>
   </div>
 </div>
