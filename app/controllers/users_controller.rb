@@ -6,6 +6,10 @@ class UsersController < ApplicationController
     @books = @user.books
     @book = Book.new
     @users = @user.followers
+    @today_book = @books.created_today
+    @yesterday_book = @books.created_yesterday
+    @week_book = @books.created_this_week
+    @last_week_book = @books.created_last_week
   end
 
   def index
